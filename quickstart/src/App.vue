@@ -1,10 +1,24 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
   <router-view/>
 </template>
+
+<script lang="ts">
+import { onMounted } from 'vue';
+import * as fcl from '@onflow/fcl';
+import useUsers from './modules/users';
+
+export default {
+  name: 'Login',
+  setup() {
+    const { setUser } = useUsers();
+
+    onMounted(() => {
+      fcl.currentUser.subscribe(setUser);
+    });
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

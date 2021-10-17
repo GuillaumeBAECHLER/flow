@@ -1,18 +1,31 @@
 <template>
+  <div id="nav">
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </div>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    {{ user.addr }}
+    <button @click="logoutAndRedirect">Logout</button>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { useRouter } from 'vue-router';
+import useUsers from '../modules/users';
 
-@Options({
-  components: {
-    HelloWorld,
+export default {
+  name: 'Home',
+  setup() {
+    const router = useRouter();
+    const { user, logout } = useUsers();
+
+    function logoutAndRedirect() {
+      logout();
+      router.push('/login');
+    }
+
+    return { user, logoutAndRedirect };
   },
-})
-export default class Home extends Vue {}
+};
 </script>

@@ -1,18 +1,25 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import * as fcl from '@onflow/fcl';
 import Home from '../views/Home.vue';
+import Login from '../views/Login.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
   },
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
 ];
@@ -20,6 +27,22 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach(async (to, _from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    const user = await fcl.currentUser().snapshot();
+    if (!user.loggedIn) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
