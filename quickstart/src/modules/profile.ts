@@ -33,7 +33,35 @@ export default function useProfile() {
     setProfile(profile);
   };
 
+  const initAccount = async () => {
+    const transactionId = await fcl.mutate({
+      cadence: `
+        import Profile from 0xProfile
+  
+        transaction {
+          prepare(account: AuthAccount) {
+            // Only initialize the account if it hasn't already been initialized
+            if (!Profile.check(account.address)) {
+              // This creates and stores the profile in the user's account
+              account.save(<- Profile.new(), to: Profile.privatePath)
+  
+              // This creates the public capability that lets applications read the profile's info
+              account.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)
+            }
+          }
+        }
+      `,
+      payer: fcl.authz,
+      proposer: fcl.authz,
+      authorizations: [fcl.authz],
+      limit: 50,
+    });
+
+    const transaction = await fcl.tx(transactionId).onceSealed();
+    console.log(transaction);
+  };
+
   return {
-    ...toRefs(state), setProfile, fetchProfile,
+    ...toRefs(state), setProfile, fetchProfile, initAccount,
   };
 }

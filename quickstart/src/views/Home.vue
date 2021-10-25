@@ -7,6 +7,7 @@
     {{ user.addr }}
     <button @click="logoutAndRedirect">Logout</button>
     {{ profile }}
+    <button @click="initAccount">Init Account</button>
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
   setup() {
     const router = useRouter();
     const { user, logout } = useAuth();
-    const { profile, fetchProfile } = useProfile();
+    const { profile, fetchProfile, initAccount } = useProfile();
 
     function logoutAndRedirect() {
       logout();
@@ -30,7 +31,7 @@ export default {
     fetchProfile();
 
     return {
-      user, profile, logoutAndRedirect,
+      user, profile, logoutAndRedirect, initAccount,
     };
   },
 };
