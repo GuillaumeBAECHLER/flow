@@ -8,10 +8,14 @@
     <button @click="logoutAndRedirect">Logout</button>
     {{ profile }}
     <button @click="initAccount">Init Account</button>
+    <div>Transaction Status: {{ transactionStatus ?? "--" }}</div>
+    <input type="text" v-model="name"/>
+    <button @click="changeName(name)">Change name</button>
   </div>
 </template>
 
 <script lang="ts">
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import useAuth from '../modules/auth';
 import useProfile from '../modules/profile';
@@ -21,7 +25,14 @@ export default {
   setup() {
     const router = useRouter();
     const { user, logout } = useAuth();
-    const { profile, fetchProfile, initAccount } = useProfile();
+    const {
+      profile,
+      fetchProfile,
+      initAccount,
+      changeName,
+      transactionStatus,
+    } = useProfile();
+    const name = ref('');
 
     function logoutAndRedirect() {
       logout();
@@ -31,7 +42,13 @@ export default {
     fetchProfile();
 
     return {
-      user, profile, logoutAndRedirect, initAccount,
+      user,
+      profile,
+      logoutAndRedirect,
+      initAccount,
+      changeName,
+      transactionStatus,
+      name,
     };
   },
 };

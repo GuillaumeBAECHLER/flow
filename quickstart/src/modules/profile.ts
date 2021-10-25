@@ -4,13 +4,19 @@ import useAuth from './auth';
 
 const state : UnwrapRef<{
   profile: any | null,
+  transactionStatus: string,
 }> = reactive({
   profile: null,
+  transactionStatus: '',
 });
 
 export default function useProfile() {
   const setProfile = (newValue: any) => {
     state.profile = newValue;
+  };
+
+  const setTransactionStatus = (newValue: any) => {
+    state.transactionStatus = newValue;
   };
 
   const fetchProfile = async () => {
@@ -61,7 +67,30 @@ export default function useProfile() {
     console.log(transaction);
   };
 
+  const changeName = async (newName: string) => {
+    const transactionId = await fcl.mutate({
+      cadence: `
+        import Profile from 0xProfile
+  
+        transaction(name: String) {
+          prepare(account: AuthAccount) {
+            account
+              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+              .setName(name)
+          }
+        }
+      `,
+      args: (arg: any, t: any) => [arg(newName, t.String)],
+      payer: fcl.authz,
+      proposer: fcl.authz,
+      authorizations: [fcl.authz],
+      limit: 50,
+    });
+
+    fcl.tx(transactionId).subscribe((res: any) => setTransactionStatus(res.status));
+  };
+
   return {
-    ...toRefs(state), setProfile, fetchProfile, initAccount,
+    ...toRefs(state), setProfile, fetchProfile, initAccount, changeName,
   };
 }
