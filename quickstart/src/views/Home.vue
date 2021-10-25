@@ -4,28 +4,34 @@
     <router-link to="/about">About</router-link>
   </div>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
     {{ user.addr }}
     <button @click="logoutAndRedirect">Logout</button>
+    {{ profile }}
   </div>
 </template>
 
 <script lang="ts">
 import { useRouter } from 'vue-router';
-import useUsers from '../modules/users';
+import useAuth from '../modules/auth';
+import useProfile from '../modules/profile';
 
 export default {
   name: 'Home',
   setup() {
     const router = useRouter();
-    const { user, logout } = useUsers();
+    const { user, logout } = useAuth();
+    const { profile, fetchProfile } = useProfile();
 
     function logoutAndRedirect() {
       logout();
       router.push('/login');
     }
 
-    return { user, logoutAndRedirect };
+    fetchProfile();
+
+    return {
+      user, profile, logoutAndRedirect,
+    };
   },
 };
 </script>

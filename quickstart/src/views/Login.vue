@@ -6,13 +6,13 @@
 
 <script lang="ts">
 import { useRouter } from 'vue-router';
-import useUsers from '../modules/users';
+import useAuth from '../modules/auth';
 
 export default {
   name: 'Login',
   setup() {
     const router = useRouter();
-    const { user, login } = useUsers();
+    const { user, login } = useAuth();
 
     async function loginAndRedirect() {
       await login();

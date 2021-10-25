@@ -5,7 +5,7 @@
 <script lang="ts">
 import { onMounted } from 'vue';
 import * as fcl from '@onflow/fcl';
-import useUsers from './modules/users';
+import useUsers from './modules/auth';
 
 export default {
   name: 'Login',
