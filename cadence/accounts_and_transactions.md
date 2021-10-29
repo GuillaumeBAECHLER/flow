@@ -2,13 +2,13 @@
 
 ### Doc
 
-(Account)[https://docs.onflow.org/cadence/language/accounts]
-(Transactions)[https://docs.onflow.org/cadence/language/transactions/]
+[Account](https://docs.onflow.org/cadence/language/accounts)
+[Transactions](https://docs.onflow.org/cadence/language/transactions/)
 
 ### Account
 
 1..n private keys w/ configurable weight
-Allowing (multiple controllers)[https://www.coindesk.com/what-is-a-multisignature-crypto-wallet]
+Allowing [multiple controllers](https://www.coindesk.com/what-is-a-multisignature-crypto-wallet)
 
 Two main areas:
 
@@ -17,7 +17,7 @@ Two main areas:
 
 #### Account Storage
 
-Similar w/ traditional filesystem, data stored in (paths)[https://docs.onflow.org/cadence/language/accounts/#paths]. Only account owner has root access.
+Similar w/ traditional filesystem, data stored in [paths](https://docs.onflow.org/cadence/language/accounts/#paths). Only account owner has root access.
 
 Make identifiers very specific to avoid conflict w/ other projects.
 

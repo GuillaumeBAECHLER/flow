@@ -1,10 +1,10 @@
 # Creating a Smart Contract
 
-(playground)[https://play.onflow.org/f51905e8-6030-4641-9324-11a3f1a6091c]
+[playground](https://play.onflow.org/f51905e8-6030-4641-9324-11a3f1a6091c)
 
 Tx have two main phases :
 
-- prepare (have access to private (AuthAccount)[https://docs.onflow.org/cadence/language/accounts/#authaccount])
+- prepare [have access to private (AuthAccount](https://docs.onflow.org/cadence/language/accounts/#authaccount))
 - execute (can only modify the objetcs removed or created in prepare phase / call functions on contracts)
 
 For capabilities:

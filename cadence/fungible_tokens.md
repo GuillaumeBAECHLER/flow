@@ -1,8 +1,8 @@
 # Fungible Tokens
 
-(doc)[https://docs.onflow.org/cadence/tutorial/03-fungible-tokens/]
+[doc](https://docs.onflow.org/cadence/tutorial/03-fungible-tokens/)
 
-(playground)[https://play.onflow.org/7c60f681-40c7-4a18-82de-b81b3b6c7915]
+[playground](https://play.onflow.org/7c60f681-40c7-4a18-82de-b81b3b6c7915)
 
 ### Decentralizing Ownership
 
